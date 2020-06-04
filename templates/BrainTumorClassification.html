@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>BrainTumorClassification</title>
+    <style>
+
+
+        .container{
+        position: relative;
+        opacity: 1;
+        background-image: url('static/formBackground.jpg');
+        height: 350px;
+        max-width: 750px;
+        top: 120px;
+        border: 1px solid;
+        padding: 10px;
+        box-shadow: 5px 10px 18px #888888;
+	margin: 0 auto;
+        }
+
+        .form-inline {
+        display: flex;
+        flex-flow: row wrap;
+        align-items: center;
+        }
+
+        .form-inline label {
+        margin: 5px 10px 5px 0;
+        }
+
+        .form-inline input {
+          vertical-align: middle;
+          margin: 5px 10px 5px 0;
+          padding: 10px;
+          background-color: #fff;
+          border: 1px solid #ddd;
+        }
+
+         .upload-btn-wrapper {
+          position: relative;
+          overflow: hidden;
+          display: inline-block;
+        }
+
+        .btn {
+          border: 2px solid gray;
+          color: gray;
+          background-color: white;
+          padding: 10px 25px;
+          border-radius: 8px;
+          font-size: 20px;
+          font-weight: bold;
+        }
+
+        .upload-btn-wrapper input[type=file] {
+          font-size: 100px;
+          position: absolute;
+          left: 0;
+          top: 0;
+          opacity: 0;
+        }
+        .btn:hover {background-color: gray; color: white;}
+
+        .btn:active {
+          background-color: gray;
+          box-shadow: 0 5px black;
+          transform: translateY(4px);
+        }
+
+        .load_container{
+        position : relative;
+        opacity: 0.3;
+        background-color: #fff;
+        top: 200px;
+        height: 100px;
+        }
+
+
+        #loader {
+            border: 12px solid #f3f3f3;
+            border-radius: 50%;
+            border-top: 12px solid #444444;
+            width: 70px;
+            height: 70px;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        .center {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            margin: auto;
+        }
+    </style>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+</head>
+<body style="background-image: url('static/Gradient_backgrounf.png'); height:100%;background-size: cover;">
+
+<div class="container">
+    <form class="form-inline" action="http://127.0.0.1:5000/Upload" method="post" enctype="multipart/form-data">
+        <div class="upload-btn-wrapper" style="top:80px; left:60px;">
+            <button class="btn">Upload T1.nii file  </button>
+            <input type="file" name="t1" />
+        </div>
+        <div class="upload-btn-wrapper" style="top:80px; left: 130px;">
+            <button class="btn">Upload T2.nii file  </button>
+            <input type="file" name="t2"/>
+        </div>
+        <div class="upload-btn-wrapper" style="top:205px; left: -85px;">
+            <button class="btn">Upload T1ce.nii file </button>
+            <input type="file" name="t1ce"/>
+        </div>
+        <div class="upload-btn-wrapper" style="top: 160px; left:50px;">
+            <button class="btn">Upload Flair.nii file</button>
+            <input type="file" name="flair"/>
+        </div>
+        <div class="upload-btn-wrapper" style="top: 105px; left:390px;">
+            <button class="btn" id="submit-button" type="submit" >Submit</button>
+        </div>
+
+    </form>
+
+</div>
+
+<div id="loader" class="center"></div>
+
+<div id = "load_container" class="load_container">
+    {% if "no" == load %}
+        <p> </p>
+    {% elif "yes" == load %}
+        <h1 style="text-align:center;  font-size: 60px; color:black; opacity: 1;">Category: {{ result }}</h1>
+    {% endif %}
+
+
+</div>
+<script>
+        document.onreadystatechange = function() {
+            if (document.readyState !== "complete") {
+                document.querySelector(
+                  "body").style.visibility = "hidden";
+                document.querySelector(
+                  "#loader").style.visibility = "visible";
+            } else {
+                document.querySelector(
+                  "#loader").style.display = "none";
+                document.querySelector(
+                  "body").style.visibility = "visible";
+            }
+        };
+    </script>
+</body>
+</html>
